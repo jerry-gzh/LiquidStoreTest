@@ -4,7 +4,7 @@ Fecha de preparación: 2026-08-28.
 
 ## Alcance y decisiones
 
-Se preparó el entorno solicitado para desarrollar y validar un tema Shopify. La vista previa está conectada a `km5nsx-rj.myshopify.com` y sincroniza un tema de desarrollo; no se ha publicado el tema ni cambiado la configuración administrativa. Necesita autenticación y conexión; no sustituye Shopify con un servidor de comercio local.
+Se preparó el entorno solicitado para desarrollar y validar un tema Shopify. La vista previa está conectada a `km5nsx-rj.myshopify.com` y sincroniza un tema de desarrollo; no se ha publicado el tema. La preparación inicial no cambió la configuración administrativa; posteriormente el usuario configuró español como idioma predeterminado. Necesita autenticación y conexión; no sustituye Shopify con un servidor de comercio local.
 
 Se eligió Dawn, la base oficial sugerida en [SHOPIFY_PROJECT_GUIDELINES](../SHOPIFY_PROJECT_GUIDELINES.md). Después de validar esa base se aplicó COMMED; las diferencias y opciones del editor están en [COMMED_IMPLEMENTATION](COMMED_IMPLEMENTATION.md).
 
@@ -103,7 +103,8 @@ npm run theme:info
 - Si la terminal solicita `Enter your store password`, introducir la contraseña del escaparate directamente en ese prompt. No pegarla como comando ni guardarla en archivos versionados.
 - `npm test`: cinco pruebas aprobadas. `npm run check`: cero errores, 51 advertencias. Ver interpretación en [COMMED_IMPLEMENTATION](COMMED_IMPLEMENTATION.md).
 - Assets de marca integrados y Montserrat servida mediante la biblioteca de fuentes de Shopify. Originales conservados; ver [ASSETS](ASSETS.md).
-- Pendiente: idioma español en Shopify Admin, catálogo médico real, colecciones, contenido comercial y pruebas completas de compra. No se han creado productos ni realizado pedidos.
+- Idioma (2026-08-28): español publicado y predeterminado según captura de Shopify Admin. Verificados `lang="es"`, diálogo de búsqueda y carrito vacío en local, sin modificar traducciones del tema. Pendiente revisar el aviso de asignación de español al mercado México y validar checkout; ver [COMMED_IMPLEMENTATION](COMMED_IMPLEMENTATION.md).
+- Pendiente: catálogo médico real, colecciones, contenido comercial y pruebas completas de compra. No se han creado productos ni realizado pedidos.
 
 ## Referencias oficiales
 

@@ -45,11 +45,19 @@ Fecha: 2026-08-28. Solicitud: integrar la marca en encabezado, pie y portada del
 - Revisión visual en escritorio y móvil; sin desbordamiento horizontal en pruebas a 390 y 320 px. Menú móvil abre y cierra al seleccionar «Categorías»; `aria-expanded` vuelve a `false`.
 - Búsqueda nativa abre su diálogo; carrito abre su estado vacío. La categoría «Material de curación» abre una búsqueda sin resultados, coherente con el catálogo actual.
 
+## Idioma español: validación del 2026-08-28
+
+- El usuario configuró español como publicado y predeterminado en Shopify Admin, según la captura compartida. También informó haber activado la redirección automática por idioma.
+- Se verificó en navegador `http://127.0.0.1:9292/`: HTML con `lang="es"`, controles de búsqueda y cuenta, enlace de carrito y nombre de la política de privacidad en español. El diálogo de búsqueda abre y cierra con etiquetas en español.
+- Se abrió `/cart`: estado vacío, enlace «Seguir comprando» y acceso a cuenta en español. No se agregaron productos ni se inició checkout; no se verificó el contenido completo de políticas o cuentas.
+- Se conservan los archivos de traducción nativos de Dawn y el idioma dinámico de Liquid. Esta validación solo modifica documentación, no código ni configuración administrativa.
+- La captura muestra «Dominios: Ninguno» y «Agrega Español para tus clientes en el mercado México». Queda pendiente revisar la asignación en ese mercado; la vista local en español no acredita esa configuración ni prueba la redirección automática.
+
 ## Pendientes y límites
 
-- La tienda sigue configurada en inglés: búsqueda, carrito, cuenta y nombres de políticas nativas conservan ese idioma. Configurar español en Shopify Admin; no sustituir a la fuerza los archivos de traducción ingleses ni declarar `es-MX` en HTML mientras el contenido nativo siga en inglés.
+- Revisar la asignación de español al mercado México y verificar idioma en checkout cuando se pruebe una compra.
 - El componente nativo de cuenta registra en consola que no existe `customer-account-main-menu` en la tienda y utiliza su menú de respaldo. Se observó también antes de la personalización; configurar ese menú en Shopify o revisar su selección antes de la entrega comercial.
 - Crear/cargar catálogo médico real y colecciones; asignarlas a las tarjetas. No inferir inventario o disponibilidad a partir de las fotos recibidas.
 - Confirmar textos de contacto, datos del negocio, derechos de uso de recursos y políticas antes de producción.
 - No se probaron variantes, creación de pedidos, pagos ni checkout; tampoco se realizó una auditoría completa de accesibilidad o rendimiento.
-- Los cambios se sincronizan únicamente mediante la sesión de desarrollo existente. No se ejecutó `theme publish`, no se usó `--allow-live` y no se alteraron ajustes administrativos.
+- Los cambios del tema se sincronizan únicamente mediante la sesión de desarrollo existente. No se ejecutó `theme publish` ni se usó `--allow-live`. El cambio administrativo de idioma fue realizado por el usuario.

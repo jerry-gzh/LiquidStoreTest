@@ -58,7 +58,7 @@ En una copia nueva del repositorio ejecutar primero `npm ci`; consultar [OPERATI
 
 ## Siguientes pasos
 
-1. Configurar el idioma español de la tienda; los controles nativos siguen usando su idioma actual, inglés.
+1. Revisar la asignación de español al mercado México: ya está publicado y predeterminado, con búsqueda y carrito verificados en español en local; el administrador aún muestra un aviso de asignación.
 2. Cargar productos médicos y crear/asignar las colecciones a las cuatro categorías del inicio.
 3. Confirmar textos comerciales, contacto y políticas antes de producción.
 4. Probar variantes, compra de prueba y checkout; revisar advertencias del analizador y accesibilidad completa antes de publicar.

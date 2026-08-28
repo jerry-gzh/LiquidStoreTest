@@ -13,6 +13,7 @@ Tienda de pruebas para COMMED sobre Shopify, con un tema personalizado en Liquid
 - [ASSETS](docs/ASSETS.md): ubicación, nombres y revisión de los recursos que se cargarán.
 - [OPERATIONS](docs/OPERATIONS.md): instalación, validación y arranque de la vista previa.
 - [COMMED_IMPLEMENTATION](docs/COMMED_IMPLEMENTATION.md): personalización, opciones del editor y pendientes de contenido.
+- [CATALOG_IMPORT](docs/CATALOG_IMPORT.md): CSV de 16 productos ficticios, importación en borrador, imágenes e inventario pendiente.
 
 ## Estructura
 
@@ -59,7 +60,7 @@ En una copia nueva del repositorio ejecutar primero `npm ci`; consultar [OPERATI
 ## Siguientes pasos
 
 1. Revisar la asignación de español al mercado México: ya está publicado y predeterminado, con búsqueda y carrito verificados en español en local; el administrador aún muestra un aviso de asignación.
-2. Cargar productos médicos y crear/asignar las colecciones a las cuatro categorías del inicio.
+2. Importar el catálogo ficticio preparado (16 productos y 27 variantes) siguiendo [CATALOG_IMPORT](docs/CATALOG_IMPORT.md); revisar imágenes e inventario antes de habilitarlo. Después crear/asignar las colecciones a las cuatro categorías del inicio.
 3. Confirmar textos comerciales, contacto y políticas antes de producción.
 4. Probar variantes, compra de prueba y checkout; revisar advertencias del analizador y accesibilidad completa antes de publicar.
 

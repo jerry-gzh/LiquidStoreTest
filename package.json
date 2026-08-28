@@ -1,0 +1,19 @@
+{
+  "name": "commed-shopify-theme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Entorno de desarrollo del tema Shopify de COMMED",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "shopify": "node --use-system-ca node_modules/@shopify/cli/bin/run.js",
+    "dev": "node --use-system-ca node_modules/@shopify/cli/bin/run.js theme dev --host 127.0.0.1",
+    "check": "node --use-system-ca node_modules/@shopify/cli/bin/run.js theme check",
+    "theme:info": "node --use-system-ca node_modules/@shopify/cli/bin/run.js theme info"
+  },
+  "devDependencies": {
+    "@shopify/cli": "4.7.0"
+  }
+}

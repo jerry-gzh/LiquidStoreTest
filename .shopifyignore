@@ -1,0 +1,29 @@
+# Repository documentation and empty-directory placeholders
+*.md
+docs/**
+tests/**
+**/.gitkeep
+LICENSE.md
+package.json
+package-lock.json
+.theme-check.yml
+
+# Original incoming resources: preserve locally until Shopify integration
+assets/brand/**
+assets/catalog/**
+assets/site.webmanifest
+
+# Local configuration, credentials and generated files
+.git/**
+.gitignore
+.shopifyignore
+.shopify/**
+.env
+.env.*
+node_modules/**
+dist/**
+coverage/**
+*.log
+**/.DS_Store
+**/Thumbs.db
+**/Desktop.ini

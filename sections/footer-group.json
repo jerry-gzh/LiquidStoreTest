@@ -1,0 +1,15 @@
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "commed-footer",
+      "settings": {
+        "color_scheme": "scheme-3"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

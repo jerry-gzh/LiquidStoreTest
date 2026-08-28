@@ -1,0 +1,16 @@
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+.shopify/
+
+# Dependencies and generated output
+node_modules/
+dist/
+coverage/
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini

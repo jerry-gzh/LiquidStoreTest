@@ -1,0 +1,44 @@
+<footer class="commed-footer color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    <div class="commed-footer__grid">
+      <div class="commed-footer__brand">
+        <a class="commed-footer__logo" href="{{ routes.root_url }}" aria-label="COMMED, inicio">
+          {% if settings.logo != blank %}
+            {{ settings.logo | image_url: width: 300 | image_tag: loading: 'lazy', widths: '100, 200, 300', sizes: '90px', alt: settings.commed_brand_name }}
+          {% else %}{% render 'commed-logo' %}{% endif %}
+        </a>
+        <div class="rte">{{ section.settings.description }}</div>
+      </div>
+      <nav aria-label="{{ section.settings.menu_heading | escape }}"><h2>{{ section.settings.menu_heading | escape }}</h2><ul role="list">
+        {% if section.settings.menu != blank %}
+          {% for link in section.settings.menu.links %}<li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>{% endfor %}
+        {% else %}{% render 'commed-navigation' %}{% endif %}
+      </ul></nav>
+      <div><h2>{{ section.settings.contact_heading | escape }}</h2><div class="rte">{{ section.settings.contact_text }}</div>
+        {% assign contact_link = section.settings.contact_link | default: pages.contact.url %}
+        {% if contact_link != blank %}<a class="commed-footer__contact" href="{{ contact_link }}">{{ section.settings.contact_label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+      </div>
+    </div>
+    <div class="commed-footer__bottom">
+      <small>&copy; {{ 'now' | date: '%Y' }} {{ settings.commed_brand_name | escape }}.</small>
+      <ul role="list">{% for policy in shop.policies %}{% if policy != blank %}<li><a href="{{ policy.url }}">{{ policy.title | escape }}</a></li>{% endif %}{% endfor %}</ul>
+    </div>
+  </div>
+</footer>
+{% schema %}
+{
+  "name":"COMMED · Pie de página",
+  "enabled_on":{"groups":["footer"]},
+  "settings":[
+    {"type":"color_scheme","id":"color_scheme","label":"Colores","default":"scheme-3"},
+    {"type":"richtext","id":"description","label":"Descripción de marca","default":"<p>Material de curación e insumos médicos.<br>Insumos que cuidan cada detalle.</p>"},
+    {"type":"text","id":"menu_heading","label":"Título del menú","default":"Explora COMMED"},
+    {"type":"link_list","id":"menu","label":"Menú","info":"Sin selección se muestran los enlaces iniciales de COMMED."},
+    {"type":"text","id":"contact_heading","label":"Título de atención","default":"Hablemos de lo que necesitas"},
+    {"type":"richtext","id":"contact_text","label":"Texto de atención","default":"<p>Consulta con nosotros información sobre los insumos que buscas.</p>"},
+    {"type":"text","id":"contact_label","label":"Acción de contacto","default":"Contactar"},
+    {"type":"url","id":"contact_link","label":"Enlace de contacto","info":"Sin selección se usa la página contact, si existe."}
+  ],
+  "presets":[{"name":"COMMED · Pie de página"}]
+}
+{% endschema %}

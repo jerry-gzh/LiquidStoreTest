@@ -1,0 +1,8 @@
+{% doc %}
+  Enlaces iniciales sin depender de colecciones o páginas aún no creadas.
+  @param {string} [link_class] - Clases de los enlaces del menú.
+{% enddoc %}
+<li><a class="{{ link_class }}" href="{{ routes.root_url }}">Inicio</a></li>
+<li><a class="{{ link_class }}" href="{{ routes.all_products_collection_url }}">Catálogo</a></li>
+<li><a class="{{ link_class }}" data-commed-anchor href="{{ routes.root_url }}#commed-categorias">Categorías</a></li>
+<li><a class="{{ link_class }}" data-commed-anchor href="{{ routes.root_url }}#commed-nosotros">Nosotros</a></li>

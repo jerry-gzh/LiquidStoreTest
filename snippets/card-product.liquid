@@ -110,6 +110,7 @@
           {%- endif -%}
           <div class="card__content">
             <div class="card__information">
+              {% if card_product.vendor == 'COMMED DEMO' or card_product.title contains 'PRUEBA' %}<span class="commed-demo-badge commed-demo-badge--card">Producto demostrativo</span>{% endif %}
               <h3
                 class="card__heading"
                 {% if card_product.featured_media == null and settings.card_style == 'standard' %}
@@ -122,7 +123,7 @@
                   class="full-unstyled-link"
                   aria-labelledby="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }}{% if card_product.available == false or card_product.compare_at_price > card_product.price %} NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}{% endif %}"
                 >
-                  {{ card_product.title | escape }}
+                  {% render 'commed-product-display-title', title: card_product.title %}
                 </a>
               </h3>
             </div>
@@ -147,6 +148,7 @@
         </div>
         <div class="card__content">
           <div class="card__information">
+            {% if card_product.vendor == 'COMMED DEMO' or card_product.title contains 'PRUEBA' %}<span class="commed-demo-badge commed-demo-badge--card">Producto demostrativo</span>{% endif %}
             <h3
               class="card__heading{% if card_product.featured_media or settings.card_style == 'standard' %} h5{% endif %}"
               {% if card_product.featured_media or settings.card_style == 'card' %}
@@ -159,7 +161,7 @@
                 class="full-unstyled-link"
                 aria-labelledby="CardLink-{{ section_id }}-{{ card_product.id }}{% if card_product.available == false or card_product.compare_at_price > card_product.price %} Badge-{{ section_id }}-{{ card_product.id }}{% endif %}"
               >
-                {{ card_product.title | escape }}
+                {% render 'commed-product-display-title', title: card_product.title %}
               </a>
             </h3>
             <div class="card-information">
@@ -512,7 +514,7 @@
                         </div>
                         <div class="quick-add-modal__content-info--bulk-details large-up-hide">
                           <a href="{{ card_product.url }}" class="full-unstyled-link">
-                            <h3>{{ card_product.title | escape }}</h3>
+                            <h3>{% render 'commed-product-display-title', title: card_product.title %}</h3>
                           </a>
                           {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
                           {%- if card_product.quantity_price_breaks_configured? -%}
@@ -526,7 +528,7 @@
                         <div class="quick-add-modal__content-info--bulk-details small-hide medium-hide">
                           <a href="{{ card_product.url }}" class="full-unstyled-link">
                             <h3 class="h2">
-                              {{ card_product.title | escape }}
+                              {% render 'commed-product-display-title', title: card_product.title %}
                             </h3>
                           </a>
                           {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}

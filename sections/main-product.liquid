@@ -99,10 +99,11 @@
                   </p>
                 {%- when 'title' -%}
                   <div class="product__title" {{ block.shopify_attributes }}>
-                    <h1>{{ product.title | escape }}</h1>
+                    {% if product.vendor == 'COMMED DEMO' or product.title contains 'PRUEBA' %}<span class="commed-demo-badge">Producto demostrativo</span>{% endif %}
+                    <h1>{% render 'commed-product-display-title', title: product.title %}</h1>
                     <a href="{{ product.url }}" class="product__title">
                       <h2 class="h1">
-                        {{ product.title | escape }}
+                        {% render 'commed-product-display-title', title: product.title %}
                       </h2>
                     </a>
                   </div>
@@ -499,6 +500,19 @@
                     section_id: section.id,
                     show_pickup_availability: true
                   -%}
+                  {% if settings.commed_quote_mode and settings.commed_whatsapp_enabled and settings.commed_whatsapp_number != blank %}
+                    {% liquid
+                      assign quote_title = product.title | remove_first: 'PRUEBA — ' | remove_first: 'PRUEBA - '
+                      assign quote_url = request.origin | append: product.url
+                      capture quote_message
+                        echo 'Hola, me interesa cotizar el producto: '
+                        echo quote_title
+                        echo '. '
+                        echo quote_url
+                      endcapture
+                      render 'commed-whatsapp-link', variant: 'product', label: 'Cotizar por WhatsApp', message: quote_message
+                    %}
+                  {% endif %}
                 {%- when 'rating' -%}
                   {%- if product.metafields.reviews.rating.value != blank -%}
                     <div class="rating-wrapper">

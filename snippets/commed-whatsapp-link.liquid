@@ -8,12 +8,28 @@
   if variant != blank
     assign link_class = link_class | append: ' commed-whatsapp-link--' | append: variant
   endif
+
+  if variant == 'floating'
+    if request.page_type == 'product' and settings.commed_quote_mode
+      assign link_class = link_class | append: ' commed-whatsapp-link--mobile-contextual-hidden'
+    elsif request.page_type == 'cart' and settings.commed_quote_mode
+      assign link_class = link_class | append: ' commed-whatsapp-link--mobile-contextual-hidden'
+    elsif request.page_type == 'page' and page.handle == 'contact'
+      assign link_class = link_class | append: ' commed-whatsapp-link--mobile-contextual-hidden'
+    endif
+  endif
+
+  assign whatsapp_url = 'https://wa.me/' | append: whatsapp_number
+  if message != blank
+    assign encoded_message = message | strip | url_encode
+    assign whatsapp_url = whatsapp_url | append: '?text=' | append: encoded_message
+  endif
 %}
 
 {% if settings.commed_whatsapp_enabled and whatsapp_number != blank %}
   <a
     class="{{ link_class }}"
-    href="https://wa.me/{{ whatsapp_number }}"
+    href="{{ whatsapp_url }}"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Contactar por WhatsApp al {{ display_number | escape }}; se abre en una ventana nueva"

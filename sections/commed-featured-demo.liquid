@@ -1,0 +1,71 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign demo_products = collections.all.products | where: 'vendor', section.settings.vendor
+  assign products_to_show = section.settings.products_to_show
+  assign visible_product_count = 0
+
+  for candidate_product in demo_products
+    if candidate_product.featured_media != blank
+      assign visible_product_count = visible_product_count | plus: 1
+      if visible_product_count >= products_to_show
+        break
+      endif
+    endif
+  endfor
+%}
+
+{% if visible_product_count > 0 %}
+  <section class="commed-featured commed-section page-width" aria-labelledby="CommedFeatured-{{ section.id }}">
+    <div class="commed-section-heading">
+      <div>
+        <p class="commed-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        <h2 id="CommedFeatured-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      </div>
+      <a class="commed-text-link" href="{{ routes.all_products_collection_url }}">{{ section.settings.link_label | escape }} <span aria-hidden="true">→</span></a>
+    </div>
+    {% if section.settings.description != blank %}<div class="commed-featured__description rte">{{ section.settings.description }}</div>{% endif %}
+    <ul class="grid product-grid grid--2-col-tablet-down grid--4-col-desktop" role="list">
+      {% assign skip_card_product_styles = false %}
+      {% assign rendered_product_count = 0 %}
+      {% for featured_product in demo_products %}
+        {% if featured_product.featured_media != blank %}
+          <li class="grid__item">
+            {% render 'card-product',
+              card_product: featured_product,
+              media_aspect_ratio: 'square',
+              image_shape: 'default',
+              show_secondary_image: true,
+              show_vendor: false,
+              show_rating: false,
+              lazy_load: true,
+              skip_styles: skip_card_product_styles,
+              quick_add: 'none',
+              section_id: section.id
+            %}
+          </li>
+          {% assign skip_card_product_styles = true %}
+          {% assign rendered_product_count = rendered_product_count | plus: 1 %}
+          {% if rendered_product_count >= products_to_show %}{% break %}{% endif %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name":"COMMED · Productos demo",
+  "limit":1,
+  "enabled_on":{"templates":["index"]},
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Etiqueta","default":"SELECCIÓN COMMED"},
+    {"type":"text","id":"heading","label":"Título","default":"Productos destacados"},
+    {"type":"richtext","id":"description","label":"Descripción","default":"<p>Una selección de insumos médicos disponibles en nuestro catálogo demostrativo.</p>"},
+    {"type":"text","id":"vendor","label":"Proveedor utilizado como filtro","default":"COMMED DEMO","info":"Solo se muestran productos cuyo proveedor coincide exactamente."},
+    {"type":"range","id":"products_to_show","label":"Productos a mostrar","min":4,"max":12,"step":1,"default":8},
+    {"type":"text","id":"link_label","label":"Acción","default":"Ver catálogo"}
+  ],
+  "presets":[{"name":"COMMED · Productos demo"}]
+}
+{% endschema %}

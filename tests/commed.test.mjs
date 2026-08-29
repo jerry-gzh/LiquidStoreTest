@@ -34,7 +34,15 @@ test('Home references valid configurable sections and category assets', () => {
       assert.ok(readFileSync(new URL(`assets/commed-category-${block.settings.fallback}.webp`, root)).length);
     }
   }
-  assert.equal(index.sections.featured_collection.disabled, true);
+  assert.equal(index.sections.featured_collection.type, 'commed-featured-demo');
+  assert.equal(index.sections.featured_collection.settings.vendor, 'COMMED DEMO');
+  const featuredDemo = read('sections/commed-featured-demo.liquid');
+  assert.match(featuredDemo, /component-card\.css/);
+  assert.match(featuredDemo, /featured_product\.featured_media != blank/);
+  assert.match(featuredDemo, /rendered_product_count >= products_to_show/);
+  const commedStyles = read('assets/commed.css');
+  assert.match(commedStyles, /\.commed-featured product-component \{[^}]*height: 100%/);
+  assert.match(commedStyles, /\.commed-featured \.card-information \{[^}]*min-height: 5\.5rem/);
   assert.equal(index.sections.purpose.type, 'commed-mission-vision');
   assert.ok(index.order.indexOf('purpose') < index.order.indexOf('about'));
   assert.equal(json('sections/footer-group.json').sections.footer.type, 'commed-footer');
@@ -59,13 +67,14 @@ test('WhatsApp is the configurable primary contact across the theme', () => {
   assert.equal(fields.find((setting) => setting.id === 'commed_whatsapp_display')?.default, '+52 1 443 160 0867');
 
   const snippet = read('snippets/commed-whatsapp-link.liquid');
-  assert.match(snippet, /https:\/\/wa\.me\/\{\{ whatsapp_number \}\}/);
+  assert.match(snippet, /assign whatsapp_url = 'https:\/\/wa\.me\/' \| append: whatsapp_number/);
   assert.match(snippet, /target="_blank"/);
   assert.match(snippet, /aria-label="Contactar por WhatsApp al/);
   assert.match(read('sections/commed-about.liquid'), /render 'commed-whatsapp-link'/);
   assert.match(read('sections/commed-footer.liquid'), /render 'commed-whatsapp-link'/);
   assert.match(read('sections/contact-form.liquid'), /render 'commed-whatsapp-link'/);
   assert.match(read('layout/theme.liquid'), /variant: 'floating'/);
+  assert.match(snippet, /message \| strip \| url_encode/);
 });
 
 test('Contact surfaces share one social icon family and configurable profile links', () => {
@@ -99,6 +108,43 @@ test('Mission and vision are editable content in the home composition', () => {
   const ids = schema.settings.map((setting) => setting.id);
   for (const id of ['mission_heading', 'mission_text', 'vision_heading', 'vision_text']) assert.ok(ids.includes(id));
   assert.match(source, /commed-purpose__card--vision/);
+});
+
+test('Demo quote mode keeps checkout reversible and builds contextual WhatsApp links', () => {
+  const fields = json('config/settings_schema.json').flatMap((group) => group.settings || []);
+  assert.equal(fields.find((setting) => setting.id === 'commed_quote_mode')?.default, true);
+  assert.equal(fields.find((setting) => setting.id === 'commed_hide_account')?.default, true);
+  assert.equal(json('config/settings_data.json').current.commed_quote_mode, true);
+  assert.equal(json('templates/product.json').sections.main.blocks.buy_buttons.settings.show_dynamic_checkout, false);
+
+  const product = read('sections/main-product.liquid');
+  assert.match(product, /Cotizar por WhatsApp/);
+  assert.match(product, /request\.origin \| append: product\.url/);
+  const cart = read('sections/main-cart-footer.liquid');
+  assert.match(cart, /Solicitar cotización por WhatsApp/);
+  assert.match(cart, /Pago con tarjeta/);
+  assert.match(cart, /visa,master,american_express/);
+  assert.match(cart, /commed-cart-payment-demo__button[\s\S]*disabled/);
+  assert.match(cart, /if settings\.commed_quote_mode and settings\.commed_whatsapp_enabled/);
+  assert.match(cart, /else[\s\S]*id="checkout"/);
+});
+
+test('Demo presentation cleans product titles and simplifies navigation', () => {
+  const titleSnippet = read('snippets/commed-product-display-title.liquid');
+  assert.match(titleSnippet, /remove_first: 'PRUEBA — '/);
+  assert.match(read('sections/main-product.liquid'), /render 'commed-product-display-title'/);
+  assert.match(read('snippets/card-product.liquid'), /commed-demo-badge/);
+  assert.match(read('assets/commed.css'), /@media \(max-width: 749px\)[\s\S]*\.commed-demo-badge--card[\s\S]*max-width: 100%/);
+  assert.match(read('assets/commed.css'), /\.product-card-wrapper \.card__badge \.badge \{ white-space: nowrap/);
+  assert.match(read('assets/commed.css'), /@media \(max-width: 359px\)[\s\S]*\.product-grid\.grid--2-col-tablet-down:not\(\.slider\)/);
+  assert.match(read('snippets/commed-whatsapp-link.liquid'), /commed-whatsapp-link--mobile-contextual-hidden/);
+  assert.match(read('sections/main-cart-items.liquid'), /render 'commed-product-display-title'/);
+  assert.match(read('sections/header.liquid'), /settings\.commed_hide_account == false/);
+
+  const navigation = read('snippets/commed-navigation.liquid');
+  assert.match(navigation, />Misión y visión</);
+  assert.match(navigation, />Contacto</);
+  assert.equal(json('templates/page.contact.json').sections.form.settings.heading, 'Estamos para ayudarte');
 });
 
 function simulateClick({ modified = false, pathname = '/', drawerPresent = true } = {}) {

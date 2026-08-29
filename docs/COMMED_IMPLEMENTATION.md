@@ -9,7 +9,7 @@ Fecha: 2026-08-28. Solicitud: integrar la marca en encabezado, pie y portada del
 - Encabezado: se conserva el comportamiento de búsqueda, cuenta, carrito y menú móvil de Dawn. El logo COMMED es un respaldo; la imagen seleccionada en el tema tiene prioridad.
 - Inicio: secciones propias de portada, categorías, misión y visión, y nosotros. Cada sección tiene ajustes de contenido; imágenes, textos y enlaces se pueden sustituir desde el editor.
 - Pie: sección COMMED configurable, enlaces de navegación, contacto y políticas existentes. El WhatsApp principal usa el número confirmado por el usuario; no se inventan correos, certificaciones o condiciones comerciales.
-- Productos destacados: bloque conservado pero deshabilitado en el inicio. La tienda mostraba `Short MTB`, un producto de prueba ajeno al catálogo médico; no se eliminó ni alteró ese producto.
+- Productos destacados: sección COMMED activa que filtra automáticamente `collections.all.products` por proveedor `COMMED DEMO`. Evita mostrar `Short MTB` y no requiere crear una colección administrativa.
 - Assets: siete copias planas con hashes idénticos a los originales. Las fotos de `assets/catalog/` no crean productos ni se presentan con precios inventados.
 - Menú móvil: `commed.js` cierra el panel de Dawn en enlaces internos y mueve el foco a la sección de destino. No altera clics modificados ni navegación hacia otras páginas.
 - Metadatos: título y descripción de inicio, nombre de marca, color del navegador, favicon y tarjeta social de respaldo. No se cambió el nombre administrativo de la tienda.
@@ -36,7 +36,8 @@ Fecha: 2026-08-28. Solicitud: integrar la marca en encabezado, pie y portada del
 - WhatsApp: el enlace `https://wa.me/5214431600867` se muestra en Nosotros, en la página de contacto, en el pie y como botón flotante global. El número visible es `+52 1 443 160 0867`; ambos valores y la visibilidad se administran en Configuración del tema → COMMED.
 - Redes sociales: LinkedIn, Instagram y Facebook usan los campos globales de Configuración del tema → Redes sociales. Para completar la demo apuntan provisionalmente al inicio oficial de cada plataforma; deben sustituirse por los perfiles de COMMED cuando estén disponibles.
 - Misión y visión: la nueva sección de portada incluye texto inicial editable para una demo. Confirmar su redacción corporativa antes de producción.
-- Productos destacados: reactivar solo después de seleccionar una colección médica válida.
+- Productos destacados: editar proveedor, cantidad y textos desde la sección COMMED · Productos demo. Sustituir el filtro temporal cuando exista una colección médica curada.
+- Modo cotización: Configuración del tema → COMMED permite sustituir temporalmente el checkout por una solicitud de cotización en WhatsApp y ocultar el acceso a cuenta. Ambos ajustes son reversibles.
 
 ## Contacto principal por WhatsApp: cambio del 2026-08-29
 
@@ -54,15 +55,28 @@ Fecha: 2026-08-28. Solicitud: integrar la marca en encabezado, pie y portada del
 - Alcance: Nosotros/contacto del inicio, página de contacto y nueva sección `commed-mission-vision` antes de Nosotros.
 - Contenido: misión y visión se incluyen como texto provisional editable, coherente con el alcance de la demo y sin afirmaciones verificables adicionales.
 
+## Flujo comercial y presentación de demo: cambio del 2026-08-29
+
+- Solicitud: mejorar la presentación sin administrar productos desde Shopify y sin duplicar el aviso de demo de la plataforma.
+- Destacados: la portada muestra hasta ocho productos cuyo proveedor es `COMMED DEMO` y que cuentan con imagen destacada. Los productos sin imagen no consumen el límite; si no existe ninguna coincidencia visualizable, la sección completa se oculta. La sección carga los estilos de tarjeta de Dawn para conservar el tamaño y la visibilidad de las imágenes.
+- Altura de destacados: las tarjetas estiran su contenedor al alto de la fila y reservan espacios consistentes para título y precio. Las ofertas y títulos largos conservan todo su contenido sin producir tarjetas de tamaños distintos.
+- Cotización: producto y carrito generan mensajes de WhatsApp con contexto. En producto se incluye nombre y URL; en carrito se incluyen cantidades, variantes y total estimado.
+- Checkout: mientras `commed_quote_mode` está activo, WhatsApp sustituye la acción real de checkout. El carrito conserva una presentación demostrativa de pago con Visa, Mastercard y American Express, además de un botón «Continuar al pago» deshabilitado y marcado como próximo; no envía pedidos ni datos de pago. Al desactivar el modo se restaura el flujo nativo. El pago dinámico de producto queda desactivado en la plantilla de demo.
+- Presentación: `PRUEBA —` se elimina únicamente al renderizar títulos y se agrega la insignia «Producto demostrativo»; los datos del catálogo no cambian. En móvil, la insignia reduce ligeramente su tipografía y puede ocupar dos líneas para mantenerse dentro de la tarjeta.
+- Ajustes móviles: por debajo de 360 px, las rejillas de productos no deslizables cambian a una columna para evitar títulos y etiquetas comprimidos; las etiquetas de estado no dividen palabras. El botón flotante de WhatsApp se reduce en esas pantallas y se oculta en producto, carrito y contacto cuando ya existe una acción contextual equivalente.
+- Navegación: se agregan Misión y visión, y Contacto. El acceso a cuenta se oculta mediante `commed_hide_account` hasta que las cuentas de cliente estén configuradas.
+- Contacto: la página incorpora título e introducción específicos, conservando formulario, WhatsApp y redes sociales.
+
 ## Validación realizada
 
-- `npm test`: ocho pruebas aprobadas (integridad de imágenes, composición/schemas, configuración de marca, WhatsApp, redes sociales y casos de navegación móvil).
+- `npm test`: diez pruebas aprobadas (integridad de imágenes, composición/schemas, configuración de marca, WhatsApp, redes sociales, cotización, presentación y navegación móvil).
 - `node --check assets/commed.js`: sin errores de sintaxis.
-- Theme Check: salida 0, cero errores y 54 advertencias. Se mantienen las reglas heredadas de Dawn; no se deshabilitó ninguna adicional.
-- Cuarenta y nueve advertencias ya existían en la base. Los cinco avisos nuevos `OrphanedSnippet` corresponden a los snippets COMMED reutilizables, aunque están llamados explícitamente desde el tema. Se registran como aparentes falsos positivos del analizador en este entorno, no como errores ocultados.
+- Theme Check: salida 0, cero errores y 55 advertencias. Se mantienen las reglas heredadas de Dawn; no se deshabilitó ninguna adicional.
+- Cuarenta y nueve advertencias ya existían en la base. Los seis avisos nuevos `OrphanedSnippet` corresponden a los snippets COMMED reutilizables, aunque están llamados explícitamente desde el tema. Se registran como aparentes falsos positivos del analizador en este entorno, no como errores ocultados.
 - Vista previa real en `http://127.0.0.1:9292`: portada y pie renderizados, imágenes cargadas, estilos Montserrat aplicados (400 en cuerpo y 900 en título), un H1 en el inicio.
-- Revisión visual en escritorio y móvil; sin desbordamiento horizontal en pruebas a 390 y 320 px. Menú móvil abre y cierra al seleccionar «Categorías»; `aria-expanded` vuelve a `false`.
+- Revisión visual en escritorio y móvil; sin desbordamiento horizontal en inicio, catálogo, producto, carrito y contacto a 390 y 320 px. A 320 px se verificaron la rejilla de una columna, etiquetas de estado sin cortes y ausencia de superposición del WhatsApp flotante en vistas con acción contextual. Menú, búsqueda y filtros móviles abren dentro del viewport; el menú cierra al seleccionar «Categorías» y `aria-expanded` vuelve a `false`.
 - Búsqueda nativa abre su diálogo; carrito abre su estado vacío. La categoría «Material de curación» abre una búsqueda sin resultados, coherente con el catálogo actual.
+- Renderizado local del 2026-08-29: inicio responde 200 y contiene destacados, insignias, Misión y visión, y Contacto; no renderiza el componente de cuenta. La primera ficha COMMED muestra cotización, insignia y título sin `PRUEBA —`. `/pages/contact` muestra título e introducción nuevos; `/cart` contiene cotización y omite checkout mientras el modo está activo.
 
 ## Idioma español: validación del 2026-08-28
 
@@ -76,10 +90,11 @@ Fecha: 2026-08-28. Solicitud: integrar la marca en encabezado, pie y portada del
 
 - Revisar la asignación de español al mercado México y verificar idioma en checkout cuando se pruebe una compra.
 - El componente nativo de cuenta registra en consola que no existe `customer-account-main-menu` en la tienda y utiliza su menú de respaldo. Se observó también antes de la personalización; configurar ese menú en Shopify o revisar su selección antes de la entrega comercial.
-- Crear/cargar catálogo médico real y colecciones; asignarlas a las tarjetas. No inferir inventario o disponibilidad a partir de las fotos recibidas.
+- Crear/cargar catálogo médico real y colecciones; asignarlas a las tarjetas de categorías. La selección destacada temporal depende del proveedor exacto `COMMED DEMO`.
 - Confirmar textos de contacto, datos del negocio, derechos de uso de recursos y políticas antes de producción.
 - No se probaron variantes, creación de pedidos, pagos ni checkout; tampoco se realizó una auditoría completa de accesibilidad o rendimiento.
-- La revisión visual del cambio de WhatsApp queda pendiente: el servidor local no estaba activo y Shopify CLI solicitó nuevamente la contraseña de la tienda porque la almacenada fue rechazada. No se ingresaron ni expusieron credenciales durante la validación.
+- Queda pendiente una revisión visual interactiva final en escritorio y móvil del conjunto agregado el 2026-08-29; la validación actual confirma el HTML renderizado, no medidas ni capturas de cada breakpoint.
 - Sustituir los inicios provisionales de LinkedIn, Instagram y Facebook por las URLs oficiales de COMMED antes de producción.
 - Confirmar con la empresa el texto definitivo de misión y visión antes de una publicación comercial.
+- Antes de habilitar pedidos reales, desactivar `commed_quote_mode`, revisar el checkout y decidir si se reactiva el pago dinámico en `templates/product.json`.
 - Los cambios del tema se sincronizan únicamente mediante la sesión de desarrollo existente. No se ejecutó `theme publish` ni se usó `--allow-live`. El cambio administrativo de idioma fue realizado por el usuario.

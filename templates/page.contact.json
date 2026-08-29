@@ -10,7 +10,8 @@
     "form": {
       "type": "contact-form",
       "settings": {
-        "heading": "",
+        "heading": "Estamos para ayudarte",
+        "introduction": "<p>Cuéntanos qué insumos necesitas. Podemos orientarte por WhatsApp o responder el formulario de contacto.</p>",
         "heading_size": "h1",
         "color_scheme": "scheme-1",
         "padding_top": 36,

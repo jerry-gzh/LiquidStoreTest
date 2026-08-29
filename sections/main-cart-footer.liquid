@@ -104,26 +104,56 @@
                 </small>
               </div>
             {%- else -%}
-              <div class="cart__ctas" {{ block.shopify_attributes }}>
-                <button
-                  type="submit"
-                  id="checkout"
-                  class="cart__checkout-button button"
-                  name="checkout"
-                  {% if cart == empty %}
-                    disabled
-                  {% endif %}
-                  form="cart"
-                >
-                  {{ 'sections.cart.checkout' | t }}
-                </button>
-              </div>
-
-              {%- if additional_checkout_buttons -%}
-                <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
-                  {{ content_for_additional_checkout_buttons }}
+              {% if settings.commed_quote_mode and settings.commed_whatsapp_enabled and settings.commed_whatsapp_number != blank %}
+                {% capture cart_quote_message %}
+                  Hola, me gustaría cotizar los productos de mi carrito:
+                  {% for item in cart.items %}
+                    {% assign cart_item_title = item.product.title | remove_first: 'PRUEBA — ' | remove_first: 'PRUEBA - ' %}
+                    - {{ item.quantity }} × {{ cart_item_title }}{% unless item.product.has_only_default_variant %} ({{ item.variant.title }}){% endunless %}
+                  {% endfor %}
+                  Total estimado: {{ cart.total_price | money_with_currency }}
+                {% endcapture %}
+                <div class="cart__ctas commed-cart-quote" {{ block.shopify_attributes }}>
+                  {% render 'commed-whatsapp-link', variant: 'cart', label: 'Solicitar cotización por WhatsApp', message: cart_quote_message %}
                 </div>
-              {%- endif -%}
+                <div class="commed-cart-payment-demo" aria-labelledby="CommedCartPaymentDemo-{{ section.id }}">
+                  <div class="commed-cart-payment-demo__heading">
+                    <p id="CommedCartPaymentDemo-{{ section.id }}">Pago con tarjeta</p>
+                    <span>Próximamente</span>
+                  </div>
+                  <ul class="commed-cart-payment-demo__icons list-unstyled" role="list" aria-label="Métodos de pago disponibles al completar la configuración">
+                    {% assign demo_payment_types = 'visa,master,american_express' | split: ',' %}
+                    {% for type in demo_payment_types %}
+                      <li>{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}</li>
+                    {% endfor %}
+                  </ul>
+                  <button class="button button--secondary commed-cart-payment-demo__button" type="button" disabled>
+                    Continuar al pago
+                  </button>
+                  <p class="commed-cart-payment-demo__note">Disponible cuando se complete la configuración comercial de la tienda.</p>
+                </div>
+              {% else %}
+                <div class="cart__ctas" {{ block.shopify_attributes }}>
+                  <button
+                    type="submit"
+                    id="checkout"
+                    class="cart__checkout-button button"
+                    name="checkout"
+                    {% if cart == empty %}
+                      disabled
+                    {% endif %}
+                    form="cart"
+                  >
+                    {{ 'sections.cart.checkout' | t }}
+                  </button>
+                </div>
+
+                {%- if additional_checkout_buttons -%}
+                  <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
+                    {{ content_for_additional_checkout_buttons }}
+                  </div>
+                {%- endif -%}
+              {% endif %}
           {%- endcase -%}
         {% endfor %}
 

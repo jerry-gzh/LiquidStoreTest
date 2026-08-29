@@ -34,6 +34,15 @@ body { letter-spacing: 0; }
 .commed-section { padding-top: 7.2rem; padding-bottom: 7.2rem; }
 .commed-section-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 2.4rem; margin-bottom: 3.2rem; }
 .commed-section h2 { font-size: clamp(3rem, 3.5vw, 4.4rem); font-weight: 900; letter-spacing: -.035em; line-height: 1.1; margin: 0; }
+.commed-featured__description { max-width: 62rem; margin: -1.6rem 0 3.2rem; color: #364d6a; font-size: 1.45rem; line-height: 1.75; }
+.commed-featured .product-grid { margin-top: 0; }
+.commed-featured product-component { display: block; width: 100%; height: 100%; }
+.commed-featured .product-card-wrapper, .commed-featured .product-card-wrapper > .card { height: 100%; }
+.commed-featured .card__information { display: flex; flex-direction: column; height: 100%; }
+.commed-featured .card__heading { min-height: 2.2rem; }
+.commed-featured .card-information { display: flex; flex-direction: column; justify-content: flex-end; min-height: 5.5rem; margin-top: auto; }
+.commed-demo-badge { display: inline-flex; align-items: center; width: max-content; margin-bottom: 1rem; padding: .45rem .8rem; color: #8d1227; background: #fff0f2; border: 1px solid #f2c7cd; border-radius: 999px; font-size: 1.05rem; font-weight: 700; letter-spacing: .04em; line-height: 1.2; text-transform: uppercase; }
+.commed-demo-badge--card { margin-bottom: .8rem; }
 .commed-category-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 2.4rem; }
 .commed-category { display: block; border: 1px solid var(--commed-border); border-radius: 2.4rem; overflow: hidden; text-decoration: none; color: var(--commed-navy); background: #fff; transition: transform .2s, box-shadow .2s; }
 .commed-category:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgb(6 39 95 / 9%); }
@@ -77,6 +86,19 @@ body { letter-spacing: 0; }
 .commed-social-icon { display: block; width: 2.2rem; height: 2.2rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
 .commed-social-links--contact { margin: -1.2rem 0 3.2rem; }
 .commed-whatsapp-link--footer { margin: .8rem 0 1.2rem; }
+.commed-whatsapp-link--product { width: 100%; margin-top: 1.2rem; }
+.commed-whatsapp-link--cart { width: 100%; min-height: 5rem; }
+.commed-cart-quote { width: 100%; }
+.commed-cart-payment-demo { display: grid; gap: 1.2rem; margin-top: 1.6rem; padding: 1.8rem; border: 1px solid var(--commed-border); border-radius: 1.6rem; background: var(--commed-ice); }
+.commed-cart-payment-demo__heading { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; }
+.commed-cart-payment-demo__heading p { margin: 0; color: var(--commed-navy); font-size: 1.4rem; font-weight: 800; }
+.commed-cart-payment-demo__heading span { padding: .4rem .8rem; color: #8d1227; background: #fff0f2; border: 1px solid #f2c7cd; border-radius: 999px; font-size: 1rem; font-weight: 700; letter-spacing: .04em; line-height: 1.2; text-transform: uppercase; }
+.commed-cart-payment-demo__icons { display: flex; align-items: center; flex-wrap: wrap; gap: .8rem; margin: 0; }
+.commed-cart-payment-demo__icons li { display: flex; align-items: center; justify-content: center; min-width: 4.8rem; min-height: 3.2rem; padding: .35rem .6rem; background: #fff; border: 1px solid var(--commed-border); border-radius: .6rem; }
+.commed-cart-payment-demo__icons .icon { width: 3.8rem; height: auto; }
+.commed-cart-payment-demo__button[disabled] { width: 100%; cursor: not-allowed; opacity: 1; }
+.commed-cart-payment-demo__note { margin: 0; color: #536985; font-size: 1.15rem; line-height: 1.5; }
+.contact__introduction { max-width: 62rem; margin: -1rem 0 2.4rem; color: #364d6a; font-size: 1.45rem; line-height: 1.75; }
 .commed-whatsapp-link--floating { position: fixed; right: 2.4rem; bottom: calc(2.4rem + env(safe-area-inset-bottom)); z-index: 5; width: 5.8rem; height: 5.8rem; min-height: 0; padding: 0; border-radius: 50%; box-shadow: 0 10px 28px rgb(4 34 20 / 30%); }
 .commed-whatsapp-link--floating:hover { transform: translateY(-2px); }
 .commed-whatsapp-link--floating .commed-whatsapp-link__icon { width: 3rem; height: 3rem; }
@@ -108,6 +130,10 @@ body { letter-spacing: 0; }
   .commed-footer__grid { gap: 3.2rem; }
 }
 @media (max-width: 749px) {
+  .commed-featured .card__heading { min-height: 4.4rem; }
+  .commed-demo-badge--card { justify-content: center; width: fit-content; max-width: 100%; padding: .4rem .6rem; font-size: .9rem; letter-spacing: .02em; text-align: center; white-space: normal; word-break: normal; }
+  .product-card-wrapper .card__badge .badge { white-space: nowrap; word-break: normal; }
+  .commed-whatsapp-link--mobile-contextual-hidden { display: none; }
   .commed-logo { width: 6.2rem; }
   .commed-hero { padding-top: 1.6rem; }
   .commed-hero__panel { border-radius: 2.4rem; display: flex; flex-direction: column; }
@@ -139,6 +165,11 @@ body { letter-spacing: 0; }
   .commed-footer__brand { grid-column: auto; }
   .commed-social-links li, .commed-social-button { width: 100%; }
   .commed-social-button { justify-content: flex-start; }
+}
+@media (max-width: 359px) {
+  .product-grid.grid--2-col-tablet-down:not(.slider) > .grid__item { width: 100%; max-width: 100%; }
+  .commed-whatsapp-link--floating { right: 1.2rem; bottom: calc(1.2rem + env(safe-area-inset-bottom)); width: 4.8rem; height: 4.8rem; }
+  .commed-whatsapp-link--floating .commed-whatsapp-link__icon { width: 2.6rem; height: 2.6rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

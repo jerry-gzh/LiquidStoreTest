@@ -51,6 +51,20 @@
         "id": "commed_whatsapp_display",
         "label": "Número visible",
         "default": "+52 1 443 160 0867"
+      },
+      {
+        "type": "checkbox",
+        "id": "commed_quote_mode",
+        "label": "Usar WhatsApp en lugar de checkout",
+        "default": true,
+        "info": "Útil para la demo mientras la tienda no recibe pedidos."
+      },
+      {
+        "type": "checkbox",
+        "id": "commed_hide_account",
+        "label": "Ocultar acceso a cuenta",
+        "default": true,
+        "info": "Oculta el acceso hasta que las cuentas de cliente estén configuradas."
       }
     ]
   },

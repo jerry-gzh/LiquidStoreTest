@@ -5,4 +5,7 @@
 <li><a class="{{ link_class }}" href="{{ routes.root_url }}">Inicio</a></li>
 <li><a class="{{ link_class }}" href="{{ routes.all_products_collection_url }}">Catálogo</a></li>
 <li><a class="{{ link_class }}" data-commed-anchor href="{{ routes.root_url }}#commed-categorias">Categorías</a></li>
+<li><a class="{{ link_class }}" data-commed-anchor href="{{ routes.root_url }}#commed-proposito">Misión y visión</a></li>
 <li><a class="{{ link_class }}" data-commed-anchor href="{{ routes.root_url }}#commed-nosotros">Nosotros</a></li>
+{% assign contact_url = pages.contact.url | default: '/pages/contact' %}
+<li><a class="{{ link_class }}" href="{{ contact_url }}">Contacto</a></li>

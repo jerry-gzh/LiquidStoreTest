@@ -195,7 +195,9 @@
     "commed_description": "Material de curación e insumos médicos para clínicas, consultorios y profesionales de la salud. Insumos que cuidan cada detalle.",
     "commed_whatsapp_enabled": true,
     "commed_whatsapp_number": "5214431600867",
-    "commed_whatsapp_display": "+52 1 443 160 0867"
+    "commed_whatsapp_display": "+52 1 443 160 0867",
+    "commed_quote_mode": true,
+    "commed_hide_account": true
   },
   "presets": {
     "Dawn": {

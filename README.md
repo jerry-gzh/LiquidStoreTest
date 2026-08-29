@@ -4,7 +4,7 @@ Tienda de pruebas para COMMED sobre Shopify, con un tema personalizado en Liquid
 
 ## Estado actual
 
-2026-08-28: identidad COMMED aplicada sobre Dawn 16.0.0, con logo, Montserrat desde Shopify, colores de marca, portada, categorías, nosotros y pie configurables. Vista previa de desarrollo comprobada en `http://127.0.0.1:9292`, conectada a `km5nsx-rj.myshopify.com`. No se ha publicado el tema.
+2026-08-29: identidad COMMED aplicada sobre Dawn 16.0.0, con portada, categorías, productos demo destacados, misión y visión, contacto social y pie configurables. El flujo de presentación usa cotización por WhatsApp y oculta temporalmente checkout y cuenta mediante ajustes reversibles. No se ha publicado el tema.
 
 ## Documentación
 
@@ -60,10 +60,10 @@ En una copia nueva del repositorio ejecutar primero `npm ci`; consultar [OPERATI
 ## Siguientes pasos
 
 1. Revisar la asignación de español al mercado México: ya está publicado y predeterminado, con búsqueda y carrito verificados en español en local; el administrador aún muestra un aviso de asignación.
-2. Importar el catálogo ficticio preparado (16 productos y 27 variantes) siguiendo [CATALOG_IMPORT](docs/CATALOG_IMPORT.md); revisar imágenes e inventario antes de habilitarlo. Después crear/asignar las colecciones a las cuatro categorías del inicio.
+2. Revisar el catálogo ficticio importado, sus imágenes e inventario siguiendo [CATALOG_IMPORT](docs/CATALOG_IMPORT.md). Crear/asignar las colecciones a las cuatro categorías del inicio; los destacados se seleccionan temporalmente por proveedor `COMMED DEMO`.
 3. Confirmar textos comerciales, contacto y políticas antes de producción.
 4. Probar variantes, compra de prueba y checkout; revisar advertencias del analizador y accesibilidad completa antes de publicar.
 
 ## Validación de esta etapa
 
-`npm test`: cinco pruebas aprobadas. Theme Check: cero errores y 51 advertencias (49 de la base más dos avisos de snippets COMMED que sí tienen referencias verificadas). Revisión visual en escritorio y móvil; sin desbordamiento horizontal en anchos de 390 y 320 px. Se comprobó carga de imágenes, tipografía, búsqueda, carrito vacío y cierre del menú móvil. No se validó una compra ni se cambió el tema publicado. Ver evidencia en [COMMED_IMPLEMENTATION](docs/COMMED_IMPLEMENTATION.md).
+`npm test`: diez pruebas aprobadas. Theme Check conserva cero errores; las advertencias de base y snippets se documentan en [COMMED_IMPLEMENTATION](docs/COMMED_IMPLEMENTATION.md). La revisión visual más reciente del flujo de cotización queda pendiente de reiniciar Shopify CLI con la contraseña correcta. No se validó una compra ni se cambió el tema publicado.

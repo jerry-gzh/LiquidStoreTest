@@ -1,0 +1,4 @@
+{% liquid
+  assign display_title = title | remove_first: 'PRUEBA — ' | remove_first: 'PRUEBA - '
+  echo display_title | escape
+%}

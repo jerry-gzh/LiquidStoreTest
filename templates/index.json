@@ -77,6 +77,10 @@
       },
       "disabled": true
     },
+    "purpose": {
+      "type": "commed-mission-vision",
+      "settings": {}
+    },
     "about": {
       "type": "commed-about",
       "settings": {}
@@ -86,6 +90,7 @@
     "hero",
     "categories",
     "featured_collection",
+    "purpose",
     "about"
   ]
 }

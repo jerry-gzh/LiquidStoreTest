@@ -157,10 +157,11 @@
     "brand_headline": "COMMED",
     "brand_description": "<p>Material de curación e insumos médicos.</p>",
     "brand_image_width": 100,
+    "social_linkedin_link": "https://www.linkedin.com/",
     "social_twitter_link": "",
-    "social_facebook_link": "",
+    "social_facebook_link": "https://www.facebook.com/",
     "social_pinterest_link": "",
-    "social_instagram_link": "",
+    "social_instagram_link": "https://www.instagram.com/",
     "social_tiktok_link": "",
     "social_tumblr_link": "",
     "social_snapchat_link": "",
@@ -191,7 +192,10 @@
     },
     "commed_brand_name": "COMMED",
     "commed_navigation": true,
-    "commed_description": "Material de curación e insumos médicos para clínicas, consultorios y profesionales de la salud. Insumos que cuidan cada detalle."
+    "commed_description": "Material de curación e insumos médicos para clínicas, consultorios y profesionales de la salud. Insumos que cuidan cada detalle.",
+    "commed_whatsapp_enabled": true,
+    "commed_whatsapp_number": "5214431600867",
+    "commed_whatsapp_display": "+52 1 443 160 0867"
   },
   "presets": {
     "Dawn": {
@@ -352,6 +356,7 @@
       "brand_headline": "",
       "brand_description": "<p></p>",
       "brand_image_width": 100,
+      "social_linkedin_link": "",
       "social_twitter_link": "",
       "social_facebook_link": "",
       "social_pinterest_link": "",

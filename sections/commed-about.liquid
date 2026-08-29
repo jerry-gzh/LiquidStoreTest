@@ -7,6 +7,7 @@
         {% render 'commed-whatsapp-link', variant: 'section', label: section.settings.whatsapp_label, show_number: true %}
         {% if about_link != blank and section.settings.link_label != blank %}<a class="button button--secondary" href="{{ about_link }}">{{ section.settings.link_label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
       </div>
+      {% render 'commed-social-links', variant: 'section', heading: section.settings.social_heading %}
     </div>
   </div>
 </section>
@@ -20,6 +21,7 @@
     {"type":"text","id":"heading","label":"Título","default":"Servicio claro, humano y especializado."},
     {"type":"richtext","id":"description","label":"Descripción","default":"<p>En COMMED nos dedicamos a la distribución de material de curación e insumos médicos. Nuestro propósito es facilitar el acceso a lo esencial para clínicas, consultorios y profesionales de la salud.</p>"},
     {"type":"text","id":"whatsapp_label","label":"Acción de WhatsApp","default":"Escríbenos por WhatsApp"},
+    {"type":"text","id":"social_heading","label":"Título de redes sociales","default":"También puedes encontrarnos en"},
     {"type":"text","id":"link_label","label":"Acción","default":"Ponte en contacto"},
     {"type":"url","id":"link","label":"Enlace","info":"Sin selección se usa la página existente con identificador contact. Si no existe, se oculta la acción."}
   ],

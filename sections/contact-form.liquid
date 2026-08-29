@@ -26,6 +26,7 @@
     <div class="contact__whatsapp">
       {% render 'commed-whatsapp-link', variant: 'contact', label: 'Contactar por WhatsApp', show_number: true %}
     </div>
+    {% render 'commed-social-links', variant: 'contact', heading: 'Redes sociales y contacto' %}
     {%- liquid
       assign contact_form_class = 'isolate'
       if settings.animations_reveal_on_scroll

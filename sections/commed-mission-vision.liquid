@@ -1,0 +1,37 @@
+<section class="commed-purpose commed-section page-width" aria-labelledby="CommedPurpose-{{ section.id }}">
+  <div class="commed-purpose__heading">
+    <p class="commed-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    <h2 id="CommedPurpose-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+    {% if section.settings.introduction != blank %}<div class="rte">{{ section.settings.introduction }}</div>{% endif %}
+  </div>
+  <div class="commed-purpose__grid">
+    <article class="commed-purpose__card">
+      <span aria-hidden="true">01</span>
+      <h3>{{ section.settings.mission_heading | escape }}</h3>
+      <div class="rte">{{ section.settings.mission_text }}</div>
+    </article>
+    <article class="commed-purpose__card commed-purpose__card--vision">
+      <span aria-hidden="true">02</span>
+      <h3>{{ section.settings.vision_heading | escape }}</h3>
+      <div class="rte">{{ section.settings.vision_text }}</div>
+    </article>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name":"COMMED · Misión y visión",
+  "limit":1,
+  "enabled_on":{"templates":["index"]},
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Etiqueta","default":"LO QUE NOS MUEVE"},
+    {"type":"text","id":"heading","label":"Título","default":"Nuestro propósito"},
+    {"type":"richtext","id":"introduction","label":"Introducción","default":"<p>Trabajamos para acercar insumos esenciales a quienes cuidan la salud todos los días.</p>"},
+    {"type":"text","id":"mission_heading","label":"Título de misión","default":"Misión"},
+    {"type":"richtext","id":"mission_text","label":"Misión","default":"<p>Facilitar a clínicas, consultorios y profesionales de la salud el acceso a material de curación e insumos médicos, con atención clara, cercana y responsable.</p>"},
+    {"type":"text","id":"vision_heading","label":"Título de visión","default":"Visión"},
+    {"type":"richtext","id":"vision_text","label":"Visión","default":"<p>Ser un aliado confiable para el sector salud, reconocido por simplificar el abastecimiento de insumos esenciales y acompañar cada necesidad con un servicio humano.</p>"}
+  ],
+  "presets":[{"name":"COMMED · Misión y visión"}]
+}
+{% endschema %}

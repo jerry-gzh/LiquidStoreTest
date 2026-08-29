@@ -1,0 +1,44 @@
+{% liquid
+  assign whatsapp_number = settings.commed_whatsapp_number | default: '5214431600867'
+  assign whatsapp_number = whatsapp_number | remove: '+' | remove: ' ' | remove: '-' | remove: '(' | remove: ')'
+  assign display_number = settings.commed_whatsapp_display | default: '+52 1 443 160 0867'
+  assign list_class = 'commed-social-links'
+
+  if variant != blank
+    assign list_class = list_class | append: ' commed-social-links--' | append: variant
+  endif
+%}
+
+<div class="{{ list_class }}">
+  {% if heading != blank %}<p class="commed-social-links__heading">{{ heading | escape }}</p>{% endif %}
+  <ul role="list" aria-label="Redes sociales y contacto">
+    {% if settings.commed_whatsapp_enabled and whatsapp_number != blank %}
+      <li>
+        <a class="commed-social-button commed-social-button--whatsapp" href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp: {{ display_number | escape }}; se abre en una ventana nueva">
+          {% render 'commed-social-icon', name: 'whatsapp' %}<span>WhatsApp</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_linkedin_link != blank %}
+      <li>
+        <a class="commed-social-button" href="{{ settings.social_linkedin_link }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn; se abre en una ventana nueva">
+          {% render 'commed-social-icon', name: 'linkedin' %}<span>LinkedIn</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_instagram_link != blank %}
+      <li>
+        <a class="commed-social-button" href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram; se abre en una ventana nueva">
+          {% render 'commed-social-icon', name: 'instagram' %}<span>Instagram</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_facebook_link != blank %}
+      <li>
+        <a class="commed-social-button" href="{{ settings.social_facebook_link }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook; se abre en una ventana nueva">
+          {% render 'commed-social-icon', name: 'facebook' %}<span>Facebook</span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</div>

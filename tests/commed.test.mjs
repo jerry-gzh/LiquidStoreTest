@@ -35,6 +35,8 @@ test('Home references valid configurable sections and category assets', () => {
     }
   }
   assert.equal(index.sections.featured_collection.disabled, true);
+  assert.equal(index.sections.purpose.type, 'commed-mission-vision');
+  assert.ok(index.order.indexOf('purpose') < index.order.indexOf('about'));
   assert.equal(json('sections/footer-group.json').sections.footer.type, 'commed-footer');
 });
 
@@ -64,6 +66,39 @@ test('WhatsApp is the configurable primary contact across the theme', () => {
   assert.match(read('sections/commed-footer.liquid'), /render 'commed-whatsapp-link'/);
   assert.match(read('sections/contact-form.liquid'), /render 'commed-whatsapp-link'/);
   assert.match(read('layout/theme.liquid'), /variant: 'floating'/);
+});
+
+test('Contact surfaces share one social icon family and configurable profile links', () => {
+  const fields = json('config/settings_schema.json').flatMap((group) => group.settings || []);
+  assert.ok(fields.some((setting) => setting.id === 'social_linkedin_link'));
+  assert.ok(fields.some((setting) => setting.id === 'social_instagram_link'));
+  assert.ok(fields.some((setting) => setting.id === 'social_facebook_link'));
+
+  const icons = read('snippets/commed-social-icon.liquid');
+  for (const network of ['whatsapp', 'linkedin', 'instagram', 'facebook']) {
+    assert.match(icons, new RegExp(`when '${network}'`));
+  }
+
+  const links = read('snippets/commed-social-links.liquid');
+  assert.match(links, /settings\.social_linkedin_link/);
+  assert.match(links, /settings\.social_instagram_link/);
+  assert.match(links, /settings\.social_facebook_link/);
+  assert.match(read('snippets/commed-whatsapp-link.liquid'), /render 'commed-social-icon', name: 'whatsapp'/);
+  assert.match(read('sections/commed-about.liquid'), /render 'commed-social-links'/);
+  assert.match(read('sections/contact-form.liquid'), /render 'commed-social-links'/);
+
+  const settings = json('config/settings_data.json').current;
+  assert.equal(settings.social_linkedin_link, 'https://www.linkedin.com/');
+  assert.equal(settings.social_instagram_link, 'https://www.instagram.com/');
+  assert.equal(settings.social_facebook_link, 'https://www.facebook.com/');
+});
+
+test('Mission and vision are editable content in the home composition', () => {
+  const source = read('sections/commed-mission-vision.liquid');
+  const schema = JSON.parse(source.match(/{% schema %}([\s\S]*?){% endschema %}/)[1]);
+  const ids = schema.settings.map((setting) => setting.id);
+  for (const id of ['mission_heading', 'mission_text', 'vision_heading', 'vision_text']) assert.ok(ids.includes(id));
+  assert.match(source, /commed-purpose__card--vision/);
 });
 
 function simulateClick({ modified = false, pathname = '/', drawerPresent = true } = {}) {

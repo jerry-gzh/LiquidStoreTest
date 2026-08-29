@@ -28,6 +28,29 @@
         "label": "Usar navegación inicial COMMED",
         "default": true,
         "info": "Inicio, Catálogo, Categorías y Nosotros. Desactivar para usar el menú seleccionado en el encabezado."
+      },
+      {
+        "type": "header",
+        "content": "WhatsApp"
+      },
+      {
+        "type": "checkbox",
+        "id": "commed_whatsapp_enabled",
+        "label": "Mostrar contacto por WhatsApp",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "commed_whatsapp_number",
+        "label": "Número para el enlace",
+        "default": "5214431600867",
+        "info": "Incluye el código de país. Se permiten +, espacios, guiones y paréntesis."
+      },
+      {
+        "type": "text",
+        "id": "commed_whatsapp_display",
+        "label": "Número visible",
+        "default": "+52 1 443 160 0867"
       }
     ]
   },

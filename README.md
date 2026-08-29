@@ -11,7 +11,7 @@ Tienda de pruebas para COMMED sobre Shopify, con un tema personalizado en Liquid
 - [SHOPIFY_PROJECT_GUIDELINES](SHOPIFY_PROJECT_GUIDELINES.md): alcance y decisiones técnicas.
 - [BRAND_GUIDELINES](BRAND_GUIDELINES.md): identidad visual de COMMED y referencias del proyecto de origen.
 - [ASSETS](docs/ASSETS.md): ubicación, nombres y revisión de los recursos que se cargarán.
-- [OPERATIONS](docs/OPERATIONS.md): instalación, validación y arranque de la vista previa.
+- [OPERATIONS](docs/OPERATIONS.md): instalación, validación, arranque y flujo de sincronización entre VS Code, Shopify y Git.
 - [COMMED_IMPLEMENTATION](docs/COMMED_IMPLEMENTATION.md): personalización, opciones del editor y pendientes de contenido.
 - [CATALOG_IMPORT](docs/CATALOG_IMPORT.md): CSV de 16 productos ficticios, importación en borrador, imágenes e inventario pendiente.
 

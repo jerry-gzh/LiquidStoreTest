@@ -50,6 +50,22 @@ test('Theme uses configurable COMMED branding and Shopify Montserrat', () => {
   assert.match(read('layout/theme.liquid'), /'commed.js' \| asset_url/);
 });
 
+test('WhatsApp is the configurable primary contact across the theme', () => {
+  const fields = json('config/settings_schema.json').flatMap((group) => group.settings || []);
+  assert.equal(fields.find((setting) => setting.id === 'commed_whatsapp_enabled')?.default, true);
+  assert.equal(fields.find((setting) => setting.id === 'commed_whatsapp_number')?.default, '5214431600867');
+  assert.equal(fields.find((setting) => setting.id === 'commed_whatsapp_display')?.default, '+52 1 443 160 0867');
+
+  const snippet = read('snippets/commed-whatsapp-link.liquid');
+  assert.match(snippet, /https:\/\/wa\.me\/\{\{ whatsapp_number \}\}/);
+  assert.match(snippet, /target="_blank"/);
+  assert.match(snippet, /aria-label="Contactar por WhatsApp al/);
+  assert.match(read('sections/commed-about.liquid'), /render 'commed-whatsapp-link'/);
+  assert.match(read('sections/commed-footer.liquid'), /render 'commed-whatsapp-link'/);
+  assert.match(read('sections/contact-form.liquid'), /render 'commed-whatsapp-link'/);
+  assert.match(read('layout/theme.liquid'), /variant: 'floating'/);
+});
+
 function simulateClick({ modified = false, pathname = '/', drawerPresent = true } = {}) {
   let listener;
   const result = { closed: false, focused: false, expanded: 'true' };

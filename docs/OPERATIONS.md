@@ -80,6 +80,69 @@ Completar el inicio de sesión cuando Shopify CLI lo solicite. No guardar ni com
 
 El comando sincroniza los archivos a un tema de desarrollo y muestra una URL local, normalmente `http://127.0.0.1:9292`, además del acceso al editor del tema. Usa los datos de la tienda y necesita conexión. Si existe un tema de desarrollo anterior para ese entorno, puede reemplazar su contenido: confirmar que sea un entorno de pruebas antes de ejecutar.
 
+## Sincronización, Git y publicación
+
+Fecha de documentación: 2026-08-29. En este proyecto, guardar código mientras `npm run dev` está activo actualiza un tema de desarrollo; no publica el tema y no depende de crear un commit.
+
+```mermaid
+flowchart LR
+    VS[Archivos del tema en VS Code]
+    CLI[Shopify CLI<br/>theme dev]
+    LOCAL[Vista local<br/>http://127.0.0.1:9292]
+    DEV[Tema de desarrollo<br/>en Shopify]
+    PREVIEW[Vista previa remota<br/>preview_theme_id]
+    GIT[Historial Git]
+    REMOTE[Repositorio Git remoto]
+    LIVE[Tema publicado]
+
+    VS -->|Guardar archivo| CLI
+    CLI -->|Hot reload| LOCAL
+    CLI -->|HTTPS: sincronización| DEV
+    DEV --> PREVIEW
+    VS -->|git commit| GIT
+    GIT -->|git push| REMOTE
+    DEV -. Publicación explícita .-> LIVE
+```
+
+Shopify CLI observa los archivos guardados, sincroniza el tema de desarrollo remoto y actualiza la vista local. Git mantiene el historial del código por separado. Ninguna flecha desde Git llega al tema publicado porque el repositorio no tiene configurada una integración de despliegue automático.
+
+### Cuándo se refleja un cambio
+
+1. Editar un archivo del tema en VS Code.
+2. Guardarlo manualmente o mediante Auto Save.
+3. Mantener activa la terminal que ejecuta `npm run dev -- --store km5nsx-rj.myshopify.com`.
+4. Esperar a que Shopify CLI procese el archivo. CSS y secciones pueden usar hot reload; otros cambios provocan una recarga completa.
+5. Revisar el resultado en `http://127.0.0.1:9292` o actualizar la vista previa remota del tema de desarrollo.
+
+Si la terminal se detiene con `Ctrl+C`, los cambios posteriores permanecen únicamente en el sistema de archivos hasta reiniciar `theme dev` o ejecutar otra operación explícita de carga. La última versión ya sincronizada puede seguir disponible temporalmente en Shopify; los temas de desarrollo pueden eliminarse al cerrar la sesión de Shopify CLI.
+
+### Qué hace Git
+
+- `git add` prepara cambios para versionarlos.
+- `git commit` crea un punto de historial local; no carga archivos a Shopify.
+- `git push` envía commits al repositorio Git remoto; no despliega el tema en la configuración actual.
+- Un cambio puede verse en la vista previa sin commit si el archivo fue guardado mientras `theme dev` estaba activo.
+
+Git sigue siendo la práctica del proyecto para conservar trazabilidad, revisar diferencias y recuperar versiones, aunque no controle la sincronización de desarrollo.
+
+### Qué requiere una acción explícita
+
+| Destino | Cómo se actualiza | Alcance |
+|---|---|---|
+| Vista local | Guardar con `theme dev` activo | Desarrollo local con datos de Shopify |
+| Tema de desarrollo | Sincronización de `theme dev` | Vista previa, no tema público |
+| Repositorio Git | `git commit` y, si corresponde, `git push` | Historial del código |
+| Tema no publicado estable | `shopify theme push` con un destino revisado | Tema remoto independiente de la sesión de desarrollo |
+| Tema publicado | Publicación deliberada desde Shopify Admin o una operación explícita con `--publish` | Tienda visible para visitantes |
+
+No ejecutar `theme push`, `theme publish`, `--publish`, `--live` ni `--allow-live` como parte del ciclo normal de edición. Antes de cualquier publicación, confirmar tienda, ID del tema, diferencias pendientes y respaldo del tema activo.
+
+### Datos administrados fuera del tema
+
+Productos, variantes, inventario, colecciones, mercados, idiomas y canales de venta se guardan en Shopify Admin. Sus cambios pueden afectar a varios temas de la misma tienda y no necesitan un commit. En cambio, Liquid, plantillas JSON, CSS, JavaScript y assets de este repositorio pertenecen al tema y siguen el flujo de Shopify CLI descrito arriba.
+
+La sincronización inversa del editor visual no está activa en el script actual. Como `npm run dev` no incluye `--theme-editor-sync`, no asumir que un cambio hecho en el editor de Shopify se guardará en los archivos locales. Evitar modificar simultáneamente la misma configuración desde VS Code y desde el editor visual.
+
 No usar `--allow-live`, `--theme` apuntando a un tema publicado, `theme publish` ni `theme push` como parte de este arranque. Los scripts no incluyen publicación automática. Detener la vista previa con `Ctrl+C`.
 
 Para comprobar el contexto de tienda cuando ya exista autenticación:
@@ -110,4 +173,5 @@ npm run theme:info
 
 - [Requisitos de Shopify CLI](https://shopify.dev/docs/api/shopify-cli#requirements).
 - [Comando theme dev y efectos sobre el tema de desarrollo](https://shopify.dev/docs/api/shopify-cli/theme/theme-dev).
+- [Comando theme push y publicación explícita](https://shopify.dev/docs/api/shopify-cli/theme/theme-push).
 - [Autenticación de Shopify CLI](https://shopify.dev/docs/storefronts/themes/tools/cli#authentication).

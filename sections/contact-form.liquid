@@ -23,6 +23,9 @@
     {%- else -%}
       <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
     {%- endif -%}
+    <div class="contact__whatsapp">
+      {% render 'commed-whatsapp-link', variant: 'contact', label: 'Contactar por WhatsApp', show_number: true %}
+    </div>
     {%- liquid
       assign contact_form_class = 'isolate'
       if settings.animations_reveal_on_scroll

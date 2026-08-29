@@ -8,7 +8,7 @@ Fecha: 2026-08-28. Solicitud: integrar la marca en encabezado, pie y portada del
 - Tipografía: Montserrat mediante la biblioteca de fuentes de Shopify, con selectores nativos; cuerpo 400, énfasis 700 y títulos 900. No se añaden peticiones a Google Fonts ni archivos de fuente ficticios. Referencia: [fuentes de Shopify](https://shopify.dev/docs/storefronts/themes/best-practices/performance/self-host-web-fonts).
 - Encabezado: se conserva el comportamiento de búsqueda, cuenta, carrito y menú móvil de Dawn. El logo COMMED es un respaldo; la imagen seleccionada en el tema tiene prioridad.
 - Inicio: secciones propias de portada, categorías y nosotros. Cada sección tiene ajustes de contenido; imágenes y enlaces se pueden sustituir desde el editor.
-- Pie: sección COMMED configurable, enlaces de navegación, contacto y políticas existentes. No se inventan teléfonos, correos, certificaciones o condiciones comerciales.
+- Pie: sección COMMED configurable, enlaces de navegación, contacto y políticas existentes. El WhatsApp principal usa el número confirmado por el usuario; no se inventan correos, certificaciones o condiciones comerciales.
 - Productos destacados: bloque conservado pero deshabilitado en el inicio. La tienda mostraba `Short MTB`, un producto de prueba ajeno al catálogo médico; no se eliminó ni alteró ese producto.
 - Assets: siete copias planas con hashes idénticos a los originales. Las fotos de `assets/catalog/` no crean productos ni se presentan con precios inventados.
 - Menú móvil: `commed.js` cierra el panel de Dawn en enlaces internos y mueve el foco a la sección de destino. No altera clics modificados ni navegación hacia otras páginas.
@@ -33,14 +33,23 @@ Fecha: 2026-08-28. Solicitud: integrar la marca en encabezado, pie y portada del
 - Portada COMMED: editar textos, imagen y acciones. La imagen incluida tiene espacio libre a la izquierda; conservar esa composición al reemplazarla para que el texto sea legible.
 - Categorías COMMED: asignar una colección a cada tarjeta, sustituir imagen, título y descripción o indicar otro enlace. Prioridad del enlace: URL explícita, colección seleccionada, búsqueda por nombre. Prioridad de imagen: selección propia, imagen de colección, respaldo COMMED.
 - Nosotros y pie: editar textos y contacto. Si no se indica URL, se usa la página existente con identificador `contact`; si no existe, no se muestra ese botón.
+- WhatsApp: el enlace `https://wa.me/5214431600867` se muestra en Nosotros, en la página de contacto, en el pie y como botón flotante global. El número visible es `+52 1 443 160 0867`; ambos valores y la visibilidad se administran en Configuración del tema → COMMED.
 - Productos destacados: reactivar solo después de seleccionar una colección médica válida.
+
+## Contacto principal por WhatsApp: cambio del 2026-08-29
+
+- Solicitud: convertir `+52 1 443 160 0867` en el principal canal de contacto visible.
+- Decisión: un único snippet normaliza el número para `wa.me` y genera los enlaces; así se evita mantener URLs distintas entre secciones.
+- Alcance: sección Nosotros/contacto del inicio, formulario de contacto, pie y botón flotante en todas las páginas que usan `layout/theme.liquid`.
+- Accesibilidad: cada enlace incluye nombre descriptivo, aviso de nueva ventana, foco visible y un icono SVG decorativo. El botón flotante respeta el área segura móvil y la preferencia de movimiento reducido.
+- Configuración: la visibilidad, el número del enlace y el formato visible quedan editables en la sección COMMED del editor del tema.
 
 ## Validación realizada
 
-- `npm test`: cinco pruebas aprobadas (integridad de imágenes, composición/schemas, configuración de marca y casos de navegación móvil).
+- `npm test`: seis pruebas aprobadas (integridad de imágenes, composición/schemas, configuración de marca, WhatsApp y casos de navegación móvil).
 - `node --check assets/commed.js`: sin errores de sintaxis.
-- Theme Check: salida 0, cero errores y 51 advertencias. Se mantienen las reglas heredadas de Dawn; no se deshabilitó ninguna adicional.
-- Cuarenta y nueve advertencias ya existían en la base. Los dos avisos nuevos `OrphanedSnippet` corresponden a `commed-logo` y `commed-navigation`, aunque están llamados explícitamente desde encabezado, menús y pie y se renderizan en navegador. Se registran como aparentes falsos positivos del analizador en este entorno, no como errores ocultados.
+- Theme Check: salida 0, cero errores y 52 advertencias. Se mantienen las reglas heredadas de Dawn; no se deshabilitó ninguna adicional.
+- Cuarenta y nueve advertencias ya existían en la base. Los tres avisos nuevos `OrphanedSnippet` corresponden a `commed-logo`, `commed-navigation` y `commed-whatsapp-link`, aunque están llamados explícitamente desde el tema. Se registran como aparentes falsos positivos del analizador en este entorno, no como errores ocultados.
 - Vista previa real en `http://127.0.0.1:9292`: portada y pie renderizados, imágenes cargadas, estilos Montserrat aplicados (400 en cuerpo y 900 en título), un H1 en el inicio.
 - Revisión visual en escritorio y móvil; sin desbordamiento horizontal en pruebas a 390 y 320 px. Menú móvil abre y cierra al seleccionar «Categorías»; `aria-expanded` vuelve a `false`.
 - Búsqueda nativa abre su diálogo; carrito abre su estado vacío. La categoría «Material de curación» abre una búsqueda sin resultados, coherente con el catálogo actual.
@@ -60,4 +69,5 @@ Fecha: 2026-08-28. Solicitud: integrar la marca en encabezado, pie y portada del
 - Crear/cargar catálogo médico real y colecciones; asignarlas a las tarjetas. No inferir inventario o disponibilidad a partir de las fotos recibidas.
 - Confirmar textos de contacto, datos del negocio, derechos de uso de recursos y políticas antes de producción.
 - No se probaron variantes, creación de pedidos, pagos ni checkout; tampoco se realizó una auditoría completa de accesibilidad o rendimiento.
+- La revisión visual del cambio de WhatsApp queda pendiente: el servidor local no estaba activo y Shopify CLI solicitó nuevamente la contraseña de la tienda porque la almacenada fue rechazada. No se ingresaron ni expusieron credenciales durante la validación.
 - Los cambios del tema se sincronizan únicamente mediante la sesión de desarrollo existente. No se ejecutó `theme publish` ni se usó `--allow-live`. El cambio administrativo de idioma fue realizado por el usuario.
